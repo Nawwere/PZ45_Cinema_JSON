@@ -12,6 +12,40 @@ function normalizeMovie(raw) {
   // TODO 1: верните объект с title, genre, year, rating, duration,
   // sessions (массив строк) и tags (массив строк).
   // Учтите отсутствие либо неверный тип отдельных полей.
+  return {
+    title: typeof raw.title === "string"
+      ? raw.title
+      : "Без названия",
+    genre: typeof raw.genre === "string"
+      ? raw.genre
+      : "Не указан",
+    year: Number.isFinite(Number(raw.year))
+      && raw.year !== null
+      ? Number(raw.year)
+      : null,
+    rating: Number.isFinite(Number(raw.rating))
+      && raw.rating !== null
+      ? Number(raw.rating)
+      : null,
+    duration: Number.isFinite(Number(raw.duration))
+      && raw.duration !== null
+      ? Number(raw.duration)
+      : null,
+    sessions: Array.isArray(raw.sessions)
+      ? raw.sessions.filter(item => typeof item === "string")
+      : [],
+    tags: Array.isArray(raw.tags)
+      ? raw.tags.filter(item => typeof item === "string")
+      : []
+  };
+}
+function createTextElement(tag, text, className = "") {
+  const element = document.createElement(tag);
+  element.textContent = text;
+  if (className) {
+    element.className = className;
+  }
+  return element;
 }
 function renderMovies(movies) {
   // TODO 2: создайте карточки createElement/textContent (без innerHTML).
